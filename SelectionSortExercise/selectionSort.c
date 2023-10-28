@@ -28,9 +28,9 @@ vector_t* SelectionSort(vector_t* v)
 
 vector_t* SortingTwoInOne(vector_t* v1, vector_t* v2)
 {
-    vector_t* v3 = init_vector(); 
-    int pushed=0;
-    for(int i=0,j=0; i<v1->size || j<v2->size;)
+    vector_t* v3 = init_vector();
+    int i,j; 
+    for(i=0,j=0; i<v1->size && j<v2->size;)
     {
         if(v1->arr[i]<v2->arr[j])
         {
@@ -43,6 +43,13 @@ vector_t* SortingTwoInOne(vector_t* v1, vector_t* v2)
             j++;
         }
     }
+    for(i;i<v1->size;i++)
+            push_back(v3,v1->arr[i]);
+
+    for(j;j<v2->size;j++)
+            push_back(v3,v2->arr[j]);
+    
+    
     return v3;
 }
 
