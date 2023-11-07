@@ -26,6 +26,36 @@ vector_t* SelectionSort(vector_t* v)
     return v;
 }
 
+void merge(vector_t* v,int start,int m, int end)
+{
+    vector_t *tmp = init_vector();
+    int i,j;
+    for( i=start,j=m; i<m && j<end;)
+    {
+        if(v->arr[i]<v->arr[j])
+        {
+            
+            push_back(tmp,v->arr[i]);
+            i++;
+        }
+        else
+        {
+            push_back(tmp,v->arr[j]);
+            j++;
+        }     
+    }
+    for(j; j<end; j++)
+        push_back(tmp,v->arr[j]);
+    for(i; i<m; i++)
+        push_back(tmp,v->arr[i]);
+    
+    for(i=0; i<(end-start); i++)
+    {
+        v->arr[i] =tmp->arr[i];
+    }
+    clear(tmp);
+}
+
 vector_t* SortingTwoInOne(vector_t* v1, vector_t* v2)
 {
     vector_t* v3 = init_vector();
@@ -85,6 +115,7 @@ void main()
 
     printVector(v1);
     printVector(v2);
+    printVector(v3);
     printVector(v3);
 
     
