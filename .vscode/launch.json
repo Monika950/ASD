@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/X270/Documents/ASD/SelectionSortExercise",
-      "program": "c:/Users/X270/Documents/ASD/SelectionSortExercise/build/Debug/outDebug",
+      "cwd": "c:/Users/X270/Documents/ASD",
+      "program": "c:/Users/X270/Documents/ASD/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
