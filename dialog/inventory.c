@@ -15,3 +15,10 @@ Inventory* init_inventory()
     inventory->count = init_vectorI();
     return inventory;
 }
+
+void printInventory(Inventory* inventory)
+{
+    printf("Inventory:\n");
+    for (int i = 0; i < inventory->object->size; i++)
+        printf("%d %s\n", inventory->count->arr[i],inventory->object->arr[i]);
+}

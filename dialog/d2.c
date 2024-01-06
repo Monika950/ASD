@@ -24,7 +24,7 @@ Node *init_node(char *NPC, vector_t *replies, Node **steps, Inventory *requireme
 
 void play_dialog(Node *root, Inventory *inventory)
 {
-    printf("%s\n", root->NPC);
+    printf("- %s\n", root->NPC);
     if (root->replies == NULL || root->replies->size == 0)
     {
         if (root->steps == NULL)
@@ -45,11 +45,11 @@ void play_dialog(Node *root, Inventory *inventory)
         {
             printf("%d. %s\n", i + 1, root->replies->arr[i]);
             if (root->requirements == NULL)
-                printf("    tax free\n");
+                printf("  -> tax free\n");
             else if (root->requirements->object->arr[i] == NULL)
-                printf("    tax free\n");
+                printf("  -> tax free\n");
             else
-                printf("    required -> %d %s\n", root->requirements->count->arr[i],root->requirements->object->arr[i]);
+                printf("  -> required -> %d %s\n", root->requirements->count->arr[i],root->requirements->object->arr[i]);
         }
 
         scanf("%d", &choice);
@@ -74,7 +74,10 @@ void play_dialog(Node *root, Inventory *inventory)
                     if (strcmp(root->requirements->object->arr[choice], inventory->object->arr[i]) == 0)
                         if (root->requirements->count->arr[choice] <= inventory->count->arr[i])
                         {
+                            inventory->count->arr[i]= inventory->count->arr[i]-root->requirements->count->arr[choice];
+                            printf("(You are left with %d %s.)\n", inventory->count->arr[i],inventory->object->arr[i]);
                             flag = 0;
+
                             break;
                         }
                 }
@@ -104,9 +107,10 @@ void main()
     push_back(inventory->object, "dragon head");
     push_backI(inventory->count, 1);
     push_back(inventory->object, "coins");
-    push_backI(inventory->count, 10);
+    push_backI(inventory->count, 20);
     push_back(inventory->object, "books");
     push_backI(inventory->count, 2);
+    printInventory(inventory);
 
     Node *start = init_node("Welcome to Fantasytown. How can I help you?", NULL, NULL, NULL);
 
@@ -123,24 +127,29 @@ void main()
     push_back(required->object, NULL);
     push_backI(required->count, 0);
 
-    Node *receiveA[] = {
-        init_node("Here is your armour.", NULL, NULL, NULL),
-        init_node("Here is your armour.", NULL, NULL, NULL),
-    };
-
+    
     vector_t *armorR = init_vector();
     push_back(armorR, "Buy cheap Light armor.");
     push_back(armorR, "Buy expensive Heavy armor.");
+    push_back(armorR, "Leave with no armor.");
 
     Inventory *required1 = init_inventory();
     push_back(required1->object, "coins");
     push_backI(required1->count, 10);
     push_back(required1->object, "coins");
     push_backI(required1->count, 15);
-
-    Node *armors = init_node("I have some armors.", armorR, receiveA, required1);
+    push_back(required1->object, NULL);
+    push_backI(required1->count, 0);
+    
 
     Node *array[] = {start};
+    Node *receiveA[] = {
+        init_node("Here is your armour.", NULL, array, NULL),
+        init_node("Here is your armour.", NULL, array, NULL),
+        init_node("Have a nice day! Anything else?", NULL, array, NULL)
+    };
+    Node *armors = init_node("I have some armors.", armorR, receiveA, required1);
+    
     Node *reward = init_node("Here is your reward. Anything else?", NULL, array, NULL);
 
     vector_t *king = init_vector();
